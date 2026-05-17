@@ -13,14 +13,14 @@
     k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
     (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    ym(109268816, "init", {
+    ym(109269462, "init", {
       clickmap: true,
       trackLinks: true,
       accurateTrackBounce: true,
       webvisor: true
     });
   </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/109268816" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <noscript><div><img src="https://mc.yandex.ru/watch/109269462" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
   <!-- /Yandex.Metrika counter -->
 
   <style>
@@ -261,7 +261,7 @@
   <a href="#admission">Поступление</a>
   <a href="#faq">FAQ</a>
   <a href="https://abit.itmo.ru/program/master/web_tech" target="_blank" class="nav-btn"
-     onclick="ym(109268816,'reachGoal','cta_nav_click')">Подать заявку</a>
+     onclick="ym(109269462,'reachGoal','cta_nav_click')">Подать заявку</a>
 </nav>
 
 <div class="hero">
@@ -270,7 +270,7 @@
   <p class="hero-sub">Магистерская программа «Веб-технологии» ИТМО — современный фулстек, AI-инструменты и продуктовая инженерия.</p>
   <div class="hero-cta">
     <a href="https://abit.itmo.ru/program/master/web_tech" target="_blank" class="btn-primary"
-       onclick="ym(109268816,'reachGoal','cta_hero_click')">Подать документы</a>
+       onclick="ym(109269462,'reachGoal','cta_hero_click')">Подать документы</a>
     <a href="#about" class="btn-ghost">Узнать больше</a>
   </div>
 
@@ -403,9 +403,14 @@
 </footer>
 
 <script>
+<script>
   const block = document.getElementById('stickyBlock');
 
-  // Тексты резюме по секциям
+  // Хелпер — стреляет в оба счётчика сразу
+  function goal(name) {
+    ym(109269462, 'reachGoal', name);
+  }
+
   const summaries = {
     about:     '59 бюджетных мест · Очная · 2 года',
     stack:     'Стек: JS, TS, React, Node.js, GraphQL и другие',
@@ -413,34 +418,30 @@
     faq:       'Есть вопросы? Напишем всё подробно на почту',
   };
 
-  // Следим за секциями — обновляем текст sticky block
   const sections = document.querySelectorAll('section[id]');
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting && summaries[e.target.id]) {
         document.getElementById('stickySummary').textContent = summaries[e.target.id];
-        // Фиксируем в Метрике какой раздел просматривался
-        ym(109268816, 'reachGoal', 'section_view_' + e.target.id);
+        goal('section_view_' + e.target.id);
       }
     });
   }, { threshold: 0.4 });
 
   sections.forEach(s => observer.observe(s));
 
-  // Показываем sticky block после 400px скролла
   let stickyShown = false;
   window.addEventListener('scroll', () => {
     if (window.scrollY > 400 && !stickyShown) {
       block.classList.remove('hidden');
       stickyShown = true;
-      // Фиксируем показ sticky block
-      ym(109268816, 'reachGoal', 'sticky_shown');
+      goal('sticky_shown');
     }
   });
 
   function closeSticky() {
     block.classList.add('hidden');
-    ym(109268816, 'reachGoal', 'sticky_closed');
+    goal('sticky_closed');
   }
 
   function submitSticky() {
@@ -449,18 +450,15 @@
       document.getElementById('stickyEmail').style.borderColor = '#f87171';
       return;
     }
-    // Фиксируем конверсию через sticky block — ключевая цель для гипотезы
-    ym(109268816, 'reachGoal', 'sticky_conversion');
-    ym(109268816, 'reachGoal', 'cta_any_click');
-
+    goal('sticky_conversion');
+    goal('cta_any_click');
     document.getElementById('stickyForm').style.display = 'none';
     document.getElementById('stickySuccess').style.display = 'block';
   }
 
-  // Трекинг основных CTA-кнопок
   document.querySelectorAll('.btn-primary, .nav-btn').forEach(btn => {
     btn.addEventListener('click', function() {
-      ym(109268816, 'reachGoal', 'cta_any_click');
+      goal('cta_any_click');
     });
   });
 </script>
