@@ -241,6 +241,55 @@
       margin-top: 80px; border-top: 1px solid var(--border);
     }
     footer a { color: var(--accent); text-decoration: none; }
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      nav {
+        top: 8px;
+        padding: 10px 16px;
+        gap: 10px;
+      }
+      nav a:not(.nav-btn):not(.nav-logo) { display: none; }
+      .hero { padding: 100px 16px 60px; }
+      .hero h1 { font-size: 2.2rem; }
+      .stats { grid-template-columns: repeat(2, 1fr); padding: 0 16px; }
+      section { padding: 60px 16px 0; }
+      .about-grid { grid-template-columns: 1fr; }
+      .career-cards { grid-template-columns: 1fr; }
+      .schol-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-card { flex-direction: column; }
+      .sticky-block { width: calc(100% - 32px); right: 16px; bottom: 16px; }
+      .version-badge { display: none; }
+    }
+
+    /* ===== WIP POPUP ===== */
+    .wip-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .wip-overlay.show { display: flex; }
+    .wip-box {
+      background: #1a1630;
+      border: 1px solid rgba(168,85,247,0.4);
+      border-radius: 16px;
+      padding: 32px 28px;
+      max-width: 340px;
+      width: 90%;
+      text-align: center;
+    }
+    .wip-box .wip-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .wip-box h3 { font-size: 1.1rem; font-weight: 700; color: #f0eeff; margin-bottom: 8px; }
+    .wip-box p { font-size: 0.9rem; color: #a09ab8; margin-bottom: 20px; }
+    .wip-box button {
+      background: #a855f7; color: #fff; border: none;
+      border-radius: 100px; padding: 10px 28px;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      font-family: inherit;
+    }
+
 
     .version-badge {
       position: fixed; bottom: 12px; left: 12px;
@@ -260,8 +309,7 @@
   <a href="#stack">Стек</a>
   <a href="#admission">Поступление</a>
   <a href="#faq">FAQ</a>
-  <a href="https://abit.itmo.ru/program/master/web_tech" target="_blank" class="nav-btn"
-     onclick="ym(109269462,'reachGoal','cta_nav_click')">Подать заявку</a>
+  <a href="#" class="nav-btn" onclick="ym(109269462,'reachGoal','cta_nav_click'); showWIP(); return false;">Подать заявку</a>
 </nav>
 
 <div class="hero">
@@ -269,8 +317,7 @@
   <h1>Где <span>код</span> встречает смысл</h1>
   <p class="hero-sub">Магистерская программа «Веб-технологии» ИТМО — современный фулстек, AI-инструменты и продуктовая инженерия.</p>
   <div class="hero-cta">
-    <a href="https://abit.itmo.ru/program/master/web_tech" target="_blank" class="btn-primary"
-       onclick="ym(109269462,'reachGoal','cta_hero_click')">Подать документы</a>
+    <a href="#" class="btn-primary" onclick="ym(109269462,'reachGoal','cta_hero_click'); showWIP(); return false;">Подать документы</a>
     <a href="#about" class="btn-ghost">Узнать больше</a>
   </div>
 
@@ -399,10 +446,17 @@
 
 <footer>
   <p>© 1993–2026 Университет ИТМО · Санкт-Петербург, Кронверкский пр., 49</p>
-  <p style="margin-top:8px;"><a href="https://abit.itmo.ru/program/master/web_tech" target="_blank">abit.itmo.ru/program/master/web_tech</a></p>
+  <p style="margin-top:8px;"><a href="#" onclick="showWIP(); return false;">abit.itmo.ru/program/master/web_tech</a></p>
 </footer>
 
 <script>
+  function showWIP() {
+    document.getElementById('wipOverlay').classList.add('show');
+  }
+  function hideWIP() {
+    document.getElementById('wipOverlay').classList.remove('show');
+  }
+
   const block = document.getElementById('stickyBlock');
 
   // Хелпер — стреляет в оба счётчика сразу
@@ -474,6 +528,17 @@
     });
   });
 </script>
+
+
+<!-- WIP Popup -->
+<div class="wip-overlay" id="wipOverlay" onclick="hideWIP()">
+  <div class="wip-box" onclick="event.stopPropagation()">
+    <div class="wip-icon">🚧</div>
+    <h3>Ещё в разработке)</h3>
+    <p>Страница приёма документов пока недоступна. Следите за обновлениями!</p>
+    <button onclick="hideWIP()">Понятно</button>
+  </div>
+</div>
 
 </body>
 </html>
